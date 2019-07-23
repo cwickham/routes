@@ -1,0 +1,26 @@
+Package: routes
+Title: Generate data-based landscapes from driving routes
+Version: 0.0.1.9000
+Authors@R: 
+    person(given = "Charlotte",
+           family = "Wickham",
+           role = c("aut", "cre"),
+           email = "cwickham@gmail.com",
+           comment = c(ORCID = "0000-0002-6365-5499"))
+Description: Code to help generate the art pieces at http://routes.cwick.co.nz.  
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    httr,
+    dplyr,
+    magrittr,
+    bitops,
+    jpeg,
+    colorspace,
+    class,
+    usethis,
+    fs,
+    tibble
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
