@@ -1,14 +1,13 @@
 ---
-title: Get coordinates of route 
+title: Get coordinates of route {{ from }} to {{ to }} 
 output: github_document
 ---
 
-```{r}
+```{r setup}
 library(tidyverse)
-library(routes2019)
+library(routes)
 library(here)
 ```
-
 
 ```{r}
 start <- "{{{ from }}}"
@@ -30,6 +29,6 @@ leaflet() %>%
 Save for later:
 ```{r}
 route_lat_lon %>% 
-  write_rds(here("routes", "{{{ shortname }}}", "route_coords.rds")) %>% 
-  write_csv(here("routes", "{{{ shortname }}}", "route_coords.csv"))
+  write_rds(here("{{{ shortname }}}", "route_coords.rds")) %>% 
+  write_csv(here("{{{ shortname }}}", "route_coords.csv"))
 ```

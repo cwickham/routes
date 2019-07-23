@@ -1,19 +1,23 @@
 ---
-title: Count and cluster colors
+title: Count and cluster colors for route {{ from }} to {{ to }} 
 output: github_document
 ---
 
-```{r}
+```{r setup}
 library(tidyverse)
 library(colorspace)
-library(routes2019)
+library(routes)
 library(here)
+set.seed(21978) # both subsampling and clustering are random, 
+                # set a seed to get reproducible image
 ```
+
+
+## Read in Streetview image manfest
 
 ```{r}
-route_images <- read_rds(here("routes", "{{{ shortname }}}", "images", "manifest.rds"))
+route_images <- read_rds(here("{{{ shortname }}}", "images", "manifest.rds"))
 ```
-
 
 ## Get sample of pixels from images
 
@@ -65,7 +69,7 @@ route_images <- route_images %>%
   mutate(
     pixels = map(image, read_pixels) %>% map(RGB),
     color_count = map(pixels, count_colours, 
-      centers = centers, colorspace = "LUV"))
+      centers = centers, colorspace = cluster_space))
 ```
 
 ## Plot
@@ -81,7 +85,7 @@ route_images %>%
 ```
 
 ```{r}
-ggsave(here("routes", "{{{ shortname }}}", "{{{ shortname }}}_route.jpeg"), 
+ggsave(here("{{{ shortname }}}", "{{{ shortname }}}_route.jpeg"), 
   height = 3, width = 10, dpi = 1800/10)
 ```
 

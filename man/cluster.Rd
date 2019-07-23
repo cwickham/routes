@@ -2,10 +2,17 @@
 % Please edit documentation in R/setup.R
 \name{cluster}
 \alias{cluster}
-\title{Generate template for clsutering, counting and plotting colors}
+\title{Generate template for clustering, counting and plotting colors}
 \usage{
 cluster(from, to, shortname = paste0(from, "_", to))
 }
+\arguments{
+\item{from}{address, or latitude and longitude of the start of the route.}
+
+\item{to}{address, or latitude and longitude of the end of the route.}
+
+\item{shortname}{string suitable for use as directory name and in file names.}
+}
 \description{
-Generate template for clsutering, counting and plotting colors
+Generate template for clustering, counting and plotting colors
 }

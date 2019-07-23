@@ -6,6 +6,13 @@
 \usage{
 route(from, to, shortname = paste0(from, "_", to))
 }
+\arguments{
+\item{from}{address, or latitude and longitude of the start of the route.}
+
+\item{to}{address, or latitude and longitude of the end of the route.}
+
+\item{shortname}{string suitable for use as directory name and in file names.}
+}
 \description{
 Generate template for getting coordinates for route
 }
