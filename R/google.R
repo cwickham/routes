@@ -65,7 +65,7 @@ DecodeLineR <- function(encoded) {
 #' @export
 get_route <- function(from, to, api_key = maps_api_key(), ...){
   dir_json <- httr::GET("https://maps.googleapis.com/maps/api/directions/json?",
-    query = list(origin = start, destination = end,
+    query = list(origin = from, destination = to,
       key = maps_api_key(), ...))
   
   httr::stop_for_status(dir_json)
@@ -73,7 +73,7 @@ get_route <- function(from, to, api_key = maps_api_key(), ...){
   route_points_string <- httr::content(dir_json)$routes[[1]]$overview_polyline$points
   
   DecodeLineR(route_points_string) %>% 
-    dplyr::mutate(order = row_number())
+    dplyr::mutate(order = dplyr::row_number())
 }
 
 #' @export

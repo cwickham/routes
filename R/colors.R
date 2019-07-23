@@ -19,24 +19,24 @@ sample_pixels <- function(file, sample_size = 50){
 #' @export
 pal <- function(col, border = "light gray", ...){
   n <- length(col)
-  plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1),
+  graphics::plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1),
     axes = FALSE, xlab = "", ylab = "", ...)
-  rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
+  graphics::rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
 }
 
 #' @export
 count_colours <- function(colours, centers, colorspace){
   stopifnot(inherits(colours, "RGB"))
-  colours <- as(colours, colorspace)
-  centers <- as(centers, colorspace)
+  colours <- methods::as(colours, colorspace)
+  centers <- methods::as(centers, colorspace)
   
-  centers_m <- as(centers, colorspace)@coords
-  colours_m <- colours@coords[complete.cases(colours@coords), ]
+  centers_m <- methods::as(centers, colorspace)@coords
+  colours_m <- colours@coords[stats::complete.cases(colours@coords), ]
   preds <- class::knn(centers_m, colours_m, 
     cl = 1:nrow(centers_m), k = 1)
   
   freqs <- table(preds)
   
-  tibble::tibble(freq = as.numeric(freqs), hex = hex(centers)) %>% 
-    bind_cols(as_tibble(centers@coords))
+  tibble::tibble(freq = as.numeric(freqs), hex = colorspace::hex(centers)) %>% 
+    dplyr::bind_cols(tibble::as_tibble(centers@coords))
 }

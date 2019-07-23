@@ -21,6 +21,9 @@ Imports:
     class,
     usethis,
     fs,
-    tibble
+    tibble,
+    stringr,
+    ggplot2,
+    methods
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
