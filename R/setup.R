@@ -48,6 +48,7 @@ route <- function(from, to, shortname = paste0(from, "_", to)){
 streetview <- function(from, to, shortname = paste0(from, "_", to)){
   path <- fs::path(shortname)
   usethis::use_directory(fs::path(path, "images"))
+  usethis::use_git_ignore("*.jpg", directory = fs::path(path, "images"))
   
   usethis::use_template(
     template = "streetview.Rmd",
