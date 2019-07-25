@@ -15,14 +15,14 @@ set.seed(21978) # both subsampling and clustering are random,
 
 ## Read in Streetview image manfest
 
-```{r}
+```{r load-manifest}
 route_images <- read_rds(here("{{{ shortname }}}", "images", "manifest.rds"))
 ```
 
 ## Get sample of pixels from images
 
 Sample 50 pixels from each image:
-```{r}
+```{r sample-pixels}
 pixel_sample_rgb <- route_images %>% 
   pull(image) %>% 
   map_dfr(sample_pixels, sample_size = 50) %>% 
@@ -30,13 +30,13 @@ pixel_sample_rgb <- route_images %>%
 ```
 
 ## Create cluster centers
-```{r}
+```{r cluster-params}
 cluster_space <- "LUV"
 n_clusters <- 50
 ```
 
 Clustering done in `r cluster_space` color space, with `r n_clusters` clusters:
-```{r}
+```{r cluster-colors}
 pixel_sample_space <- pixel_sample_rgb %>% 
   as(cluster_space)
 
@@ -48,13 +48,13 @@ centers %>% hex() %>% pal()
 
 ## Count pixels in each cluster
 
-```{r}
+```{r count-colors-sample} 
 color_freq_sample <- count_colours(pixel_sample_rgb, centers,
   colorspace = cluster_space)
 ```
 
 Histogram of counts based on sample:
-```{r}
+```{r hist-colors-sample}
 color_freq_sample %>% 
   ggplot(aes(hex, freq, fill = hex)) +
     geom_col() +
@@ -64,7 +64,7 @@ color_freq_sample %>%
 
 ## Count pixels in each image
 
-```{r}
+```{r count-colors-all}
 route_images <- route_images %>% 
   mutate(
     pixels = map(image, read_pixels) %>% map(RGB),
@@ -76,7 +76,7 @@ route_images <- route_images %>%
 
 ## Initial Plot
 
-```{r, fig.width = 10, fig.height = 3}
+```{r initial-plot, fig.width = 10, fig.height = 3}
 route_images %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = hex)) +
@@ -85,12 +85,12 @@ route_images %>%
   equal_margins()
 ```
 
-```{r, fig.width = 10, fig.height = 3}
-orderby <- quo(H)
+```{r order-param, fig.width = 10, fig.height = 3}
+orderby <- quo(V)
 ```
 
-You might try re-ordering the colors by one of the color dimensions, e.g. `r rlang::quo_text(orderby)`, other options are `V`, `U` or `L`:
-```{r}
+You might try re-ordering the colors by one of the color dimensions, e.g. `r rlang::quo_text(orderby)`, other options are `H`, `U` or `L`:
+```{r ordered-plot}
 route_images %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = reorder(hex, !!orderby))) +
@@ -102,11 +102,11 @@ route_images %>%
 ## (Optional) Smoothing
 
 The landscape is too complex and you want to smooth out the wiggles.  This approach uses a loess smoother to average frequencies for each color.  Adjust the span closer to 1 for more smoothing, closer to zero for less:
-```{r}
+```{r smoothing-param}
 span <- 0.9
 ```
 
-```{r}
+```{r smooth-freq}
 route_smooth <- 
   route_images %>% 
   group_by(hex, L, U, V, H) %>% 
@@ -119,7 +119,7 @@ route_smooth <-
 ```
 
 There is no guarantee the areas add to a constant, so this often gives a wavy top and bottom:
-```{r, fig.width = 10, fig.height = 3}
+```{r smooth-plot, fig.width = 10, fig.height = 3}
 route_smooth  %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = reorder(hex, !!orderby), color = hex)) +
@@ -129,7 +129,7 @@ route_smooth  %>%
 ```
 
 Scaling to have frequencies add to 1 restores the rectangular boundaries:
-```{r}
+```{r smooth-scaled-plot}
 route_smooth  %>% 
   group_by(order) %>% 
   mutate(freq = freq/(sum(freq))) %>% 
@@ -144,12 +144,12 @@ route_smooth  %>%
 
 You like the complexity of the plot, but you want the transitions to be smoother.  This approach adds intermediate points on the x-axis, allowing a smoother transition.
 
-```{r}
+```{r interp-grid}
 # set up a grid along x-axis
 order_grid <- seq(1, max(route_images$order), length.out = 1000)
 ```
 
-```{r}
+```{r interp-freq}
 route_interpolate <- 
   route_images %>% 
   group_by(hex, L, U, V, H) %>% 
@@ -164,7 +164,7 @@ route_interpolate <-
   mutate(freq = freq/sum(freq)) 
 ```
 
-```{r, fig.width = 10, fig.height = 3}
+```{r interp-plot, fig.width = 10, fig.height = 3}
 route_interpolate %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = reorder(hex, !!orderby), color = hex)) +
@@ -176,7 +176,7 @@ route_interpolate %>%
 ## Save image
 
 `height` and `width` are in inches, `dpi = 300` is good for professional printing:
-```{r}
+```{r save-plot}
 ggsave(here("{{{ shortname }}}", "{{{ shortname }}}_route.jpeg"), 
   height = 6, width = 20, dpi = 300)
 ```
