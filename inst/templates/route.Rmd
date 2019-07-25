@@ -14,16 +14,34 @@ start <- "{{{ from }}}"
 end <- "{{{ to }}}"
 ```
 
+## Get coordinates 
+
 ```{r}
 route_lat_lon <- get_route(start, end)
 ```
-A quick check:
 
+## Checks 
+
+Interactive with leaflet:
 ```{r, eval = FALSE}
 library(leaflet)
 leaflet() %>% 
   addTiles() %>% 
   addPolylines(~ lon, ~ lat, data = route_lat_lon)
+```
+
+Static with ggmap:
+```{r}
+library(ggmap)
+bbox <- with(route_lat_lon, 
+  c(left = min(lon), bottom = min(lat), 
+    right = max(lon), top = max(lat)))
+
+map <- get_stamenmap(bbox, zoom = 9, 
+  maptype = "toner-hybrid", source = "stamen", force = TRUE)
+ggmap(map) +
+  geom_path(data = route_lat_lon, color = "#377EB8") +
+  theme_void()
 ```
 
 Save for later:
