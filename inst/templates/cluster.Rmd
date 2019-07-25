@@ -36,7 +36,7 @@ n_clusters <- 50
 ```
 
 Clustering done in `r cluster_space` color space, with `r n_clusters` clusters:
-```{r cluster-colors}
+```{r cluster-colors, fig.width = 10, fig.height = 3}
 pixel_sample_space <- pixel_sample_rgb %>% 
   as(cluster_space)
 
@@ -54,7 +54,7 @@ color_freq_sample <- count_colours(pixel_sample_rgb, centers,
 ```
 
 Histogram of counts based on sample:
-```{r hist-colors-sample}
+```{r hist-colors-sample, fig.width = 4, fig.height = 7}
 color_freq_sample %>% 
   ggplot(aes(hex, freq, fill = hex)) +
     geom_col() +
@@ -90,7 +90,7 @@ orderby <- quo(V)
 ```
 
 You might try re-ordering the colors by one of the color dimensions, e.g. `r rlang::quo_text(orderby)`, other options are `H`, `U` or `L`:
-```{r ordered-plot}
+```{r ordered-plot, fig.width = 10, fig.height = 3}
 route_images %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = reorder(hex, !!orderby))) +
@@ -129,7 +129,7 @@ route_smooth  %>%
 ```
 
 Scaling to have frequencies add to 1 restores the rectangular boundaries:
-```{r smooth-scaled-plot}
+```{r smooth-scaled-plot, fig.width = 10, fig.height = 3}
 route_smooth  %>% 
   group_by(order) %>% 
   mutate(freq = freq/(sum(freq))) %>% 

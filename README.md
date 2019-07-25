@@ -10,8 +10,8 @@
 ![](man/figures/README-oregon_route.jpeg)
 
 This repo is the home of an R package that helps me create
-[routes](routes.cwick.co.nz). It is provided with minimal documentation
-and no guarantees.
+[routes](https://routes.cwick.co.nz). It is provided with minimal
+documentation and no guarantees.
 
 ## Installation
 
@@ -49,9 +49,9 @@ routes::setup(from = "Corvallis, OR", to = "Portland, OR",
 
 You need to specify `from` and `to` as strings interpretable to Google
 Maps as locations. `setup()` creates a folder called `shortname/` and
-creates a file `00-setup.R` from a template inside this directory.
-(*routes uses `here::here()` extensively in its templates under the
-assumption that `shortname/` is in the root directory of your project*).
+creates a `00-setup.R` file inside this directory. (*routes uses
+`here::here()` extensively in its templates under the assumption that
+`shortname/` is in the root directory of your project*).
 
 `00-setup.R` will open for editing. You will see the three required
 steps for creating a route. Run each step to create and open a new file,

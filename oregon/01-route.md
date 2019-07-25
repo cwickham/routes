@@ -29,46 +29,16 @@ leaflet() %>%
   addPolylines(~ lon, ~ lat, data = route_lat_lon)
 ```
 
-Static with
-    ggmap:
+Static with ggmap:
 
 ``` r
 library(ggmap)
-```
-
-    ## Google's Terms of Service: https://cloud.google.com/maps-platform/terms/.
-
-    ## Please cite ggmap if you use it! See citation("ggmap") for details.
-
-    ## 
-    ## Attaching package: 'ggmap'
-
-    ## The following object is masked from 'package:routes':
-    ## 
-    ##     route
-
-``` r
 bbox <- with(route_lat_lon, 
   c(left = min(lon), bottom = min(lat), 
     right = max(lon), top = max(lat)))
 
 map <- get_stamenmap(bbox, zoom = 9, 
   maptype = "toner-hybrid", source = "stamen", force = TRUE)
-```
-
-    ## Source : http://tile.stamen.com/toner-hybrid/9/80/183.png
-
-    ## Source : http://tile.stamen.com/toner-hybrid/9/81/183.png
-
-    ## Source : http://tile.stamen.com/toner-hybrid/9/80/184.png
-
-    ## Source : http://tile.stamen.com/toner-hybrid/9/81/184.png
-
-    ## Source : http://tile.stamen.com/toner-hybrid/9/80/185.png
-
-    ## Source : http://tile.stamen.com/toner-hybrid/9/81/185.png
-
-``` r
 ggmap(map) +
   geom_path(data = route_lat_lon, color = "#377EB8") +
   theme_void()
