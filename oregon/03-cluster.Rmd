@@ -56,10 +56,11 @@ color_freq_sample <- count_colours(pixel_sample_rgb, centers,
 Histogram of counts based on sample:
 ```{r hist-colors-sample, fig.width = 4, fig.height = 7}
 color_freq_sample %>% 
-  ggplot(aes(hex, freq, fill = hex)) +
+  ggplot(aes(reorder(hex, freq), freq, fill = hex)) +
     geom_col() +
   scale_fill_identity() +
-  coord_flip()
+  coord_flip() +
+  theme_classic()
 ```
 
 ## Count pixels in each image

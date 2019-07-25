@@ -59,10 +59,11 @@ Histogram of counts based on sample:
 
 ``` r
 color_freq_sample %>% 
-  ggplot(aes(hex, freq, fill = hex)) +
+  ggplot(aes(reorder(hex, freq), freq, fill = hex)) +
     geom_col() +
   scale_fill_identity() +
-  coord_flip()
+  coord_flip() +
+  theme_classic()
 ```
 
 ![](03-cluster_files/figure-gfm/hist-colors-sample-1.png)<!-- -->
