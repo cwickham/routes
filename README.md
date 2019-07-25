@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/cwickham/routes.svg?branch=master)](https://travis-ci.org/cwickham/routes)
 <!-- badges: end -->
 
 ![](man/figures/README-oregon_route.jpeg)
