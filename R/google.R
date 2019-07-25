@@ -1,6 +1,23 @@
-# Look for API key in environment variable `"GOOGLE_API_KEY"`
+#' Get Google Maps API Key
+#' 
+#' Looks for API key in environment variable `"GOOGLE_API_KEY"`
+#' 
+#' routes assumes you have a Google API key stored in the environment variable 
+#' `GOOGLE_API_KEY`.  First, get an [API key from google](https://developers.google.com/maps/documentation/streetview/get-api-key), 
+#' then run:
+#' ```{r, eval = FALSE}
+#' usethis::edit_r_environ()
+#' ```
+#' to open your `.Renviron` file and add a line of the form:
+#'  ```
+#' GOOGLE_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#' ```
 maps_api_key <- function(){
-  Sys.getenv("GOOGLE_API_KEY")
+  key <- Sys.getenv("GOOGLE_API_KEY")
+  if (key == ""){
+    stop("No google API key found.  See `?maps_api_key` for help.", call. = FALSE)
+  }
+  key
 }
 
 # From: https://gist.github.com/cwickham/1ea84d1db2226722bb0c

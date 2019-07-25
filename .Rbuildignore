@@ -1,3 +1,5 @@
 ^LICENSE\.md$
 ^routes\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
+^oregon$
