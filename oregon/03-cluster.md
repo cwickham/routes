@@ -119,19 +119,26 @@ color. Adjust the span closer to 1 for more smoothing, closer to zero
 for less:
 
 ``` r
-span <- 0.9
+span <- 0.2 
+n_points <- 1000 # number of points on x-axis
 ```
 
 ``` r
+order_grid <- seq(0, max(route_images$order), length.out = n_points)
 route_smooth <- 
   route_images %>% 
   group_by(hex, L, U, V, H) %>% 
   nest() %>% 
   mutate(
-    loess = map(data, ~ loess(sqrt(freq) ~ order, data = ., span = span)),
-    smooth = map(loess, ~ broom::augment(.) %>% select(order, freq = .fitted))) %>% 
-  unnest(smooth)  %>% 
-  mutate(freq = freq^2) 
+   smooth_fun = map(data, ~ 
+      loess(sqrt(freq) ~ order, data = ., span = span)),
+   smooth = map(smooth_fun, 
+     ~ tibble(
+        order = order_grid, 
+        freq = predict(., newdata = order_grid)^2)
+      )
+  ) %>% 
+  unnest(smooth)  
 ```
 
 There is no guarantee the areas add to a constant, so this often gives a
@@ -145,6 +152,8 @@ route_smooth  %>%
   scale_color_identity() +
   equal_margins()
 ```
+
+    ## Warning: Removed 200 rows containing missing values (position_stack).
 
 ![](03-cluster_files/figure-gfm/smooth-plot-1.png)<!-- -->
 
@@ -162,44 +171,9 @@ route_smooth  %>%
   equal_margins() 
 ```
 
+    ## Warning: Removed 200 rows containing missing values (position_stack).
+
 ![](03-cluster_files/figure-gfm/smooth-scaled-plot-1.png)<!-- -->
-
-## (Optional) Interpolate
-
-You like the complexity of the plot, but you want the transitions to be
-smoother. This approach adds intermediate points on the x-axis, allowing
-a smoother transition.
-
-``` r
-# set up a grid along x-axis
-order_grid <- seq(1, max(route_images$order), length.out = 1000)
-```
-
-``` r
-route_interpolate <- 
-  route_images %>% 
-  group_by(hex, L, U, V, H) %>% 
-  nest() %>% 
-  mutate(
-    smooth_fun = map(data, ~ 
-      with(., splinefun(order, sqrt(freq), method = "natural"))),
-    smooth = map(smooth_fun, ~ tibble(order = order_grid, freq = invoke(., x = order_grid)^2))
-  ) %>% 
-  unnest(smooth) %>%  
-  group_by(order) %>% 
-  mutate(freq = freq/sum(freq)) 
-```
-
-``` r
-route_interpolate %>% 
-  ggplot(aes(order, freq)) +
-    geom_area(aes(fill = reorder(hex, !!orderby), color = hex)) +
-  scale_fill_identity() +
-  scale_color_identity() +
-  equal_margins()
-```
-
-![](03-cluster_files/figure-gfm/interp-plot-1.png)<!-- -->
 
 ## Save image
 
@@ -210,3 +184,5 @@ printing:
 ggsave(here("oregon", "oregon_route.jpeg"), 
   height = 6, width = 20, dpi = 300)
 ```
+
+    ## Warning: Removed 200 rows containing missing values (position_stack).
