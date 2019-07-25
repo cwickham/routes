@@ -54,8 +54,26 @@ creates a `00-setup.R` file inside this directory. (*routes uses
 `shortname/` is in the root directory of your project*).
 
 `00-setup.R` will open for editing. You will see the three required
-steps for creating a route. Run each step to create and open a new file,
-run the code in the file to complete the step.
+steps for creating a route.
+
+``` r
+# Building a route landscape from Corvallis, OR to Portland, OR
+
+# Step 1: Get the route coordinates
+routes::route(from = "Corvallis, OR",
+  to = "Portland, OR", shortname = "oregon")
+
+# Step 2: Get the StreetView images
+routes::streetview(from = "Corvallis, OR",
+  to = "Portland, OR", shortname = "oregon")
+
+# Step 3: Cluster, count and plot the colors
+routes::cluster(from = "Corvallis, OR",
+  to = "Portland, OR", shortname = "oregon")
+```
+
+Run each step to create and open a new file, run the code in the file to
+complete the step.
 
 An example of running through these steps can be found in
 [oregon](oregon/). In particular, you can see the result of Knitting the

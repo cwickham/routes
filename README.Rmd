@@ -50,7 +50,11 @@ routes::setup(from = "Corvallis, OR", to = "Portland, OR",
 
 You need to specify  `from` and `to` as strings interpretable to Google Maps as locations.  `setup()` creates a folder called `shortname/` and creates a `00-setup.R` file inside this directory.  (*routes uses `here::here()` extensively in its templates under the assumption that `shortname/` is in the root directory of your project*).
 
-`00-setup.R` will open for editing.  You will see the three required steps for creating a route.  Run each step to create and open a new file, run the code in the file to complete the step.
+`00-setup.R` will open for editing.  You will see the three required steps for creating a route. 
+```{r, code = readLines("oregon/00-setup.R"), eval = FALSE}
+
+```
+Run each step to create and open a new file, run the code in the file to complete the step.
 
 An example of running through these steps can be found in [oregon](oregon/).  In particular, you can see the result of Knitting the steps in the following files:
 
