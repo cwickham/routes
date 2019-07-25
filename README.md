@@ -7,8 +7,11 @@
 
 <!-- badges: end -->
 
-This is mostly a package to help me create [routes](routes.cwick.co.nz).
-It is provided with minimal documentation and no guarantees.
+![](man/figures/README-oregon_route.jpeg)
+
+This repo is the home of an R package that helps me create
+[routes](routes.cwick.co.nz). It is provided with minimal documentation
+and no guarantees.
 
 ## Installation
 
@@ -42,11 +45,10 @@ Open a new RStudio project and run `setup()`:
 ``` r
 routes::setup(from = "Corvallis, OR", to = "Portland, OR",
   shortname = "oregon")
-#> ✔ Setting active project to '/Users/wickhamc/Documents/Projects/routes/routes'
 ```
 
 You need to specify `from` and `to` as strings interpretable to Google
-Maps as locations. `setup()` creates a folder called `shortname` and
+Maps as locations. `setup()` creates a folder called `shortname/` and
 creates a file `00-setup.R` from a template inside this directory.
 (*routes uses `here::here()` extensively in its templates under the
 assumption that `shortname/` is in the root directory of your project*).
@@ -56,8 +58,9 @@ steps for creating a route. Run each step to create and open a new file,
 run the code in the file to complete the step.
 
 An example of running through these steps can be found in
-[oregon](oregon/). In particular the result of Knitting the steps:
+[oregon](oregon/). In particular, you can see the result of Knitting the
+steps in the following files:
 
-  - [01-route.md](oregon/01-route.md)
-  - [02-streetview.md](oregon/02-streetview.md)
-  - [03-cluster.md](oregon/03-cluster.md)
+  - [01-route](oregon/01-route.md)
+  - [02-streetview](oregon/02-streetview.md)
+  - [03-cluster](oregon/03-cluster.md)
