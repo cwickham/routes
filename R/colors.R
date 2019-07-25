@@ -40,3 +40,12 @@ count_colours <- function(colours, centers, colorspace){
   tibble::tibble(freq = as.numeric(freqs), hex = colorspace::hex(centers)) %>% 
     dplyr::bind_cols(tibble::as_tibble(centers@coords))
 }
+
+#' @export
+display_jpeg <- function(path){
+  img <- jpeg::readJPEG(path, native = TRUE)
+  plot(1:ncol(img), 1:nrow(img), type = 'n', axes = FALSE, 
+    xlab = "", ylab = "")
+  rasterImage(img, 1, 1, ncol(img), nrow(img))
+  invisible(img)
+}

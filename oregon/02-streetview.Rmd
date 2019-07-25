@@ -38,3 +38,13 @@ route_images %>%
   write_rds(here("oregon", "images", "manifest.rds")) %>% 
   write_csv(here("oregon", "images", "manifest.csv"))
 ```
+
+## Checks
+
+Look at first and last images:
+```{r streetview-examples, fig.height = 3, fig.width = 3}
+route_images %>% 
+  slice(1, n()) %>% 
+  pull(image) %>% 
+  walk(display_jpeg)
+```
