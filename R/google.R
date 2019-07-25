@@ -79,7 +79,31 @@ DecodeLineR <- function(encoded) {
   return(ret)
 }
 
+
+#' Get route from Google Directions API
+#' 
+#' Coordinates of a route from two locations from the Google Directions API.  
+#' 
+#' The coordinates match instructions in the route and they will not 
+#' be equispaced along the route.
+#'
+#' @param from Character string for start of route: "The address, textual latitude/longitude 
+#' value, or place ID from which you wish to calculate directions".
+#' @param to Character string for end of route
+#' @param api_key Character string of your API key.  By default, looks for 
+#' `GOOGLE_API_KEY` environment variable, see [maps_api_key()].
+#' @param ... Other parameters passed to the 
+#' [Directions API](https://developers.google.com/maps/documentation/directions/intro)
+#'
+#' @return tibble with `lat`, `lon` and `order` columns for each step in the 
+#' route.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' get_route("Corvallis, OR", "Portland, OR")
+#' get_route("37.2341762,-112.8726299", "37.2174425,-112.973322")
+#' }
 get_route <- function(from, to, api_key = maps_api_key(), ...){
   dir_json <- httr::GET("https://maps.googleapis.com/maps/api/directions/json?",
     query = list(origin = from, destination = to,
@@ -90,10 +114,36 @@ get_route <- function(from, to, api_key = maps_api_key(), ...){
   route_points_string <- httr::content(dir_json)$routes[[1]]$overview_polyline$points
   
   DecodeLineR(route_points_string) %>% 
-    dplyr::mutate(order = dplyr::row_number())
+    dplyr::mutate(order = dplyr::row_number()) %>% 
+    tibble::as_tibble()
 }
 
+
+#' Get Street View image from Google Street View API
+#'
+#' Download Street View image at given latitude, longitude location.
+#'
+#' See the [Google Street View Static API Docs](https://developers.google.com/maps/documentation/streetview/intro#url_parameters)
+#' for more info on available parameters.
+#' 
+#' @param lat latitude 
+#' @param lon longitude
+#' @param dir path to directory image should be downloaded to
+#' @param api_key Character string of your API key.  By default, looks for 
+#' `GOOGLE_API_KEY` environment variable, see [maps_api_key()].
+#' @param size dimensions in pixels of file to download as a string, e.g. "100x100"
+#' @param suffix string to be appended to the end of the file name
+#' @param ... other parameters passed along to the Google Street View Static API, 
+#' e.g. heading, pitch.
+#'
+#' @return file path of downloaded file, invisibly.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' img <- get_img(lat = 37.2341762, lon = -112.8726299, dir = tempdir())
+#' display_jpeg(img)
+#' }
 get_img <- function(lat, lon, dir, api_key = maps_api_key(), size = "100x100", suffix = "", ...){
   file_name <- paste0(lat, "_", lon, suffix, ".jpg")
   file_path <- fs::path(dir, file_name)
