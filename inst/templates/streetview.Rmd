@@ -27,7 +27,8 @@ Get all StreetView images:
 route_images <- route_lat_lon_sub %>% 
   mutate(
     image = pmap_chr(list(lat = lat, lon = lon), 
-      possibly(get_img, NA_character_), dir = here("routes", "{{{ shortname }}}", "images"))  
+      possibly(get_img, NA_character_), 
+      dir = here("{{{ shortname }}}", "images"))  
   )
 ```
 
