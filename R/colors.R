@@ -44,8 +44,8 @@ count_colours <- function(colours, centers, colorspace){
 #' @export
 display_jpeg <- function(path){
   img <- jpeg::readJPEG(path, native = TRUE)
-  plot(1:ncol(img), 1:nrow(img), type = 'n', axes = FALSE, 
+  graphics::plot(1:ncol(img), 1:nrow(img), type = 'n', axes = FALSE, 
     xlab = "", ylab = "")
-  rasterImage(img, 1, 1, ncol(img), nrow(img))
+  graphics::rasterImage(img, 1, 1, ncol(img), nrow(img))
   invisible(img)
 }
