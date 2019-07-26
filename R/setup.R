@@ -29,6 +29,7 @@ setup <- function(from, to, shortname = paste0(from, "_", to)){
 #' @export
 route <- function(from, to, shortname = paste0(from, "_", to)){
   path <- fs::path(shortname)
+  usethis::use_directory(fs::path(path, "data"))
   
   usethis::use_template(
     template = "route.Rmd",

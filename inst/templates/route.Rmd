@@ -47,6 +47,6 @@ ggmap(map) +
 Save for later:
 ```{r}
 route_lat_lon %>% 
-  write_rds(here("{{{ shortname }}}", "route_coords.rds")) %>% 
-  write_csv(here("{{{ shortname }}}", "route_coords.csv"))
+  write_rds(here("{{{ shortname }}}", "data", "route_coords.rds")) %>% 
+  write_csv(here("{{{ shortname }}}", "data", "route_coords.csv"))
 ```

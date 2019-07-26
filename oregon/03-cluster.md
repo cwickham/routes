@@ -91,8 +91,8 @@ Save cluster centers and frequencies in sampled pixels:
 
 ``` r
 color_freq_sample %>% 
-  write_rds(here("oregon", "color_freq_sample.rds")) %>% 
-  write_csv(here("oregon", "color_freq_sample.csv"))
+  write_rds(here("oregon", "data", "color_freq_sample.rds")) %>% 
+  write_csv(here("oregon", "data", "color_freq_sample.csv"))
 ```
 
 ## Count pixels in each image
@@ -114,7 +114,7 @@ route_pixels %>%
   unnest() %>% 
   group_by(lat, lon, order, image, hex) %>% 
   count() %>% 
-  write_csv(here("oregon", "route_pixels_raw_counts.csv.gz"))
+  write_csv(here("oregon", "data", "route_pixels_raw_counts.csv.gz"))
 ```
 
 ``` r
@@ -126,7 +126,7 @@ route_pixels <-
 
 ``` r
 route_pixels %>% 
-  write_rds(here("oregon", "route_pixels.rds"))
+  write_rds(here("oregon", "data", "route_pixels.rds"))
 ```
 
 ## Initial Plot

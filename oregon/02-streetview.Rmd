@@ -11,7 +11,7 @@ max_images <- 50 # download at most this many images
 ```
 
 ```{r}
-route_lat_lon <- read_rds(here("oregon", "route_coords.rds"))
+route_lat_lon <- read_rds(here("oregon", "data", "route_coords.rds"))
 ```
 
 Only get images for at most `r max_images` points on route:

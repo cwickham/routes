@@ -66,8 +66,8 @@ color_freq_sample %>%
 Save cluster centers and frequencies in sampled pixels:
 ```{r}
 color_freq_sample %>% 
-  write_rds(here("{{{ shortname }}}", "color_freq_sample.rds")) %>% 
-  write_csv(here("{{{ shortname }}}", "color_freq_sample.csv"))
+  write_rds(here("{{{ shortname }}}", "data", "color_freq_sample.rds")) %>% 
+  write_csv(here("{{{ shortname }}}", "data", "color_freq_sample.csv"))
 ```
 
 ## Count pixels in each image
@@ -88,7 +88,7 @@ route_pixels %>%
   unnest() %>% 
   group_by(lat, lon, order, image, hex) %>% 
   count() %>% 
-  write_csv(here("{{{ shortname }}}", "route_pixels_raw_counts.csv.gz"))
+  write_csv(here("{{{ shortname }}}", "data", "route_pixels_raw_counts.csv.gz"))
 ```
 
 ```{r route-pixels}
@@ -100,7 +100,7 @@ route_pixels <-
 
 ```{r save-route-pixels}
 route_pixels %>% 
-  write_rds(here("{{{ shortname }}}", "route_pixels.rds"))
+  write_rds(here("{{{ shortname }}}", "data", "route_pixels.rds"))
 ```
 
 ## Initial Plot
