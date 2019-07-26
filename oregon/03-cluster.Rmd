@@ -63,22 +63,50 @@ color_freq_sample %>%
   theme_classic()
 ```
 
+Save cluster centers and frequencies in sampled pixels:
+```{r}
+color_freq_sample %>% 
+  write_rds(here("oregon", "color_freq_sample.rds")) %>% 
+  write_csv(here("oregon", "color_freq_sample.csv"))
+```
+
 ## Count pixels in each image
 
 ```{r count-colors-all}
-route_images <- route_images %>% 
+route_pixels <- route_images %>% 
   mutate(
     pixels = map(image, read_pixels) %>% map(RGB),
     color_count = map(pixels, count_colors, 
-      centers = centers, colorspace = "LUV")) %>% 
+      centers = centers, colorspace = "LUV")) 
+```
+
+Save some summaries so plots can be reproduced without `images/`:
+```{r save-pixels}
+route_pixels %>% 
+  mutate(hex = map(pixels, hex)) %>% 
+  select(-color_count, -pixels) %>% 
+  unnest() %>% 
+  group_by(lat, lon, order, image, hex) %>% 
+  count() %>% 
+  write_csv(here("oregon", "route_pixels_raw_counts.csv.gz"))
+```
+
+```{r route-pixels}
+route_pixels <- 
+  route_pixels %>% 
   unnest(color_count) %>% 
   mutate(H = as(LUV(L, U, V), "polarLUV")@coords[, "H"])
+```
+
+```{r save-route-pixels}
+route_pixels %>% 
+  write_rds(here("oregon", "route_pixels.rds"))
 ```
 
 ## Initial Plot
 
 ```{r initial-plot, fig.width = 10, fig.height = 3}
-route_images %>% 
+route_pixels %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = hex)) +
   scale_fill_identity() +
@@ -92,7 +120,7 @@ orderby <- quo(V)
 
 You might try re-ordering the colors by one of the color dimensions, e.g. `r rlang::quo_text(orderby)`, other options are `H`, `U` or `L`:
 ```{r ordered-plot, fig.width = 10, fig.height = 3}
-route_images %>% 
+route_pixels %>% 
   ggplot(aes(order, freq)) +
     geom_area(aes(fill = reorder(hex, !!orderby))) +
   scale_fill_identity() +
@@ -109,9 +137,9 @@ n_points <- 1000 # number of points on x-axis
 ```
 
 ```{r smooth-freq}
-order_grid <- seq(0, max(route_images$order), length.out = n_points)
+order_grid <- seq(0, max(route_pixels$order), length.out = n_points)
 route_smooth <- 
-  route_images %>% 
+  route_pixels %>% 
   group_by(hex, L, U, V, H) %>% 
   nest() %>% 
   mutate(
