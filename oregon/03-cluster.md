@@ -10,7 +10,7 @@ set.seed(21978) # both subsampling and clustering are random,
                 # set a seed to get reproducible image
 ```
 
-## Read in Streetview image manfest
+## Read in Street View image manifest
 
 ``` r
 route_images <- read_rds(here("oregon", "images", "manifest.rds"))
@@ -51,7 +51,7 @@ centers %>% hex() %>% pal()
 ## Count pixels in each cluster
 
 ``` r
-color_freq_sample <- count_colours(pixel_sample_rgb, centers,
+color_freq_sample <- count_colors(pixel_sample_rgb, centers,
   colorspace = cluster_space)
 ```
 
@@ -74,7 +74,7 @@ color_freq_sample %>%
 route_images <- route_images %>% 
   mutate(
     pixels = map(image, read_pixels) %>% map(RGB),
-    color_count = map(pixels, count_colours, 
+    color_count = map(pixels, count_colors, 
       centers = centers, colorspace = "LUV")) %>% 
   unnest(color_count) %>% 
   mutate(H = as(LUV(L, U, V), "polarLUV")@coords[, "H"])
@@ -119,7 +119,7 @@ color. Adjust the span closer to 1 for more smoothing, closer to zero
 for less:
 
 ``` r
-span <- 0.2 
+span <- 0.15 
 n_points <- 1000 # number of points on x-axis
 ```
 

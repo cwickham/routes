@@ -21,7 +21,7 @@ route_lat_lon_sub <- route_lat_lon %>%
   slice(seq(1, nrow(route_lat_lon), by = every_nth))
 ```
 
-Get all StreetView images:
+Get all Street View images:
 
 ``` r
 route_images <- route_lat_lon_sub %>% 

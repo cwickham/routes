@@ -8,12 +8,12 @@ library(tidyverse)
 library(colorspace)
 library(routes)
 library(here)
-set.seed(464810) # both subsampling and clustering are random, 
+set.seed(21978) # both subsampling and clustering are random, 
                 # set a seed to get reproducible image
 ```
 
 
-## Read in Streetview image manfest
+## Read in Street View image manifest
 
 ```{r load-manifest}
 route_images <- read_rds(here("oregon", "images", "manifest.rds"))
