@@ -26,7 +26,7 @@ read_pixels <- function(file){
 #'
 #' @param file path to JPEG file
 #'
-#' @return Invisibily the native JPEG object.
+#' @return Invisibly the native JPEG object.
 #' 
 #' @export
 #'
@@ -90,13 +90,13 @@ pal <- function(col, border = "light gray", ...){
 
 #' Count colors based on proximity to centers
 #' 
-#' Colours in `colours` are binned to the closest colours in `centers` based 
-#' on Euclidean distance in the colour space provided in `colorspace`.  These 
+#' Colors in `colors` are binned to the closest colors in `centers` based 
+#' on Euclidean distance in the color space provided in `colorspace`.  These 
 #' are then tabulated to give the number of pixels of each color in `centers`.
 #'
-#' @param colours colours to be tabulated as a [colorspace::color-class] object, 
+#' @param colors colors to be tabulated as a [colorspace::color-class] object, 
 #' e.g. [colorspace::RGB].
-#' @param centers colours to be used for binning as a [colorspace::color-class] object, 
+#' @param centers colors to be used for binning as a [colorspace::color-class] object, 
 #' e.g. [colorspace::RGB].
 #' @param colorspace string describing the colorspace in which distances should 
 #' be calculated, e.g. `"RGB"`, `"LAB"`, `"LUV"`. 
@@ -109,16 +109,16 @@ pal <- function(col, border = "light gray", ...){
 #' example_jpg <- system.file("extdata", "example.JPG", package = "routes")
 #' read_pixels(example_jpg) %>% 
 #'   colorspace::RGB() %>%
-#'   count_colours(centers = colorspace::RGB(c(1, 0, 0), c(0, 1, 0),  c(0, 0, 1)),
+#'   count_colors(centers = colorspace::RGB(c(1, 0, 0), c(0, 1, 0),  c(0, 0, 1)),
 #'     colorspace = "RGB") 
-count_colours <- function(colours, centers, colorspace){
-  stopifnot(inherits(colours, "RGB"))
-  colours <- methods::as(colours, colorspace)
+count_colors <- function(colors, centers, colorspace){
+  stopifnot(inherits(colors, "RGB"))
+  colors <- methods::as(colors, colorspace)
   centers <- methods::as(centers, colorspace)
   
   centers_m <- methods::as(centers, colorspace)@coords
-  colours_m <- colours@coords[stats::complete.cases(colours@coords), ]
-  preds <- class::knn(centers_m, colours_m, 
+  colors_m <- colors@coords[stats::complete.cases(colors@coords), ]
+  preds <- class::knn(centers_m, colors_m, 
     cl = 1:nrow(centers_m), k = 1)
   
   freqs <- table(preds)

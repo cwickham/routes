@@ -2,7 +2,7 @@
 % Please edit documentation in R/setup.R
 \name{streetview}
 \alias{streetview}
-\title{Generate template for getting streetview images}
+\title{Generate template for getting street view images}
 \usage{
 streetview(from, to, shortname = paste0(from, "_", to))
 }
@@ -14,5 +14,5 @@ streetview(from, to, shortname = paste0(from, "_", to))
 \item{shortname}{string suitable for use as directory name and in file names.}
 }
 \description{
-Generate template for getting streetview images
+Generate template for getting street view images
 }

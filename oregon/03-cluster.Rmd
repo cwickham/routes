@@ -49,7 +49,7 @@ centers %>% hex() %>% pal()
 ## Count pixels in each cluster
 
 ```{r count-colors-sample} 
-color_freq_sample <- count_colours(pixel_sample_rgb, centers,
+color_freq_sample <- count_colors(pixel_sample_rgb, centers,
   colorspace = cluster_space)
 ```
 
@@ -69,7 +69,7 @@ color_freq_sample %>%
 route_images <- route_images %>% 
   mutate(
     pixels = map(image, read_pixels) %>% map(RGB),
-    color_count = map(pixels, count_colours, 
+    color_count = map(pixels, count_colors, 
       centers = centers, colorspace = "LUV")) %>% 
   unnest(color_count) %>% 
   mutate(H = as(LUV(L, U, V), "polarLUV")@coords[, "H"])

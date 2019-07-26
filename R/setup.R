@@ -39,7 +39,7 @@ route <- function(from, to, shortname = paste0(from, "_", to)){
 }
 
 
-#' Generate template for getting streetview images
+#' Generate template for getting street view images
 #'
 #' @param from address, or latitude and longitude of the start of the route.
 #' @param to address, or latitude and longitude of the end of the route.

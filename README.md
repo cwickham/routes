@@ -49,7 +49,7 @@ routes::setup(from = "Corvallis, OR", to = "Portland, OR",
   shortname = "oregon")
 ```
 
-You need to specify `from` and `to` as strings interpretable to Google
+You need to specify `from` and `to` as strings understandable to Google
 Maps as locations. `setup()` creates a folder called `shortname/` and
 creates a `00-setup.R` file inside this directory. (*routes uses
 `here::here()` extensively in its templates under the assumption that
@@ -78,9 +78,9 @@ Run each step to create and open a new file, run the code in the file to
 complete the step.
 
 An example of running through these steps can be found in
-[oregon](oregon/). In particular, you can see the result of Knitting the
-steps in the following files:
+[`oregon/`](oregon/). In particular, you can see the result of Knitting
+the steps in the following files:
 
-  - [01-route](oregon/01-route.md)
-  - [02-streetview](oregon/02-streetview.md)
-  - [03-cluster](oregon/03-cluster.md)
+  - [`01-route`](oregon/01-route.md)
+  - [`02-streetview`](oregon/02-streetview.md)
+  - [`03-cluster`](oregon/03-cluster.md)

@@ -10,7 +10,7 @@ display_jpeg(file)
 \item{file}{path to JPEG file}
 }
 \value{
-Invisibily the native JPEG object.
+Invisibly the native JPEG object.
 }
 \description{
 A way to quickly check the contents of a JPEG file on disk.

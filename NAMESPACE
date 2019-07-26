@@ -2,7 +2,7 @@
 
 export("%>%")
 export(cluster)
-export(count_colours)
+export(count_colors)
 export(display_jpeg)
 export(equal_margins)
 export(get_img)
