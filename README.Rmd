@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 
 This repo is the home of an R package that helps me create [routes](https://routes.cwick.co.nz).  It is provided with minimal documentation and no guarantees.
 
+If you would like me to create something for you, or you just want a print of something I've already made, head to my [Etsy store](https://www.etsy.com/shop/dataroutes).
+
 ## Installation
 
 You can install the development version from [GitHub](https://github.com/) with:
@@ -74,3 +76,11 @@ fs::file_copy(here::here("oregon", "oregon_route.jpeg"),
   here::here("man/figures/README-oregon_route.jpeg"),
   overwrite = TRUE)
 ```
+
+
+## Crediting my work
+
+I've provided this package publicly because I'd love you to create your own artworks. If you do, please credit me for the original code, and support me by sending people to my [Etsy store](https://www.etsy.com/shop/dataroutes).
+
+
+

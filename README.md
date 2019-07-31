@@ -15,6 +15,10 @@ This repo is the home of an R package that helps me create
 [routes](https://routes.cwick.co.nz). It is provided with minimal
 documentation and no guarantees.
 
+If you would like me to create something for you, or you just want a
+print of something I’ve already made, head to my [Etsy
+store](https://www.etsy.com/shop/dataroutes).
+
 ## Installation
 
 You can install the development version from
@@ -84,3 +88,10 @@ the steps in the following files:
   - [`01-route`](oregon/01-route.md)
   - [`02-streetview`](oregon/02-streetview.md)
   - [`03-cluster`](oregon/03-cluster.md)
+
+## Crediting my work
+
+I’ve provided this package publicly because I’d love you to create your
+own artworks. If you do, please credit me for the original code, and
+support me by sending people to my [Etsy
+store](https://www.etsy.com/shop/dataroutes).
